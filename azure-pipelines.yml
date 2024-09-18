@@ -23,9 +23,9 @@ stages:
 
           - script: |
               echo "Current directory:"
-              pwd
+              cd
               echo "Files in directory:"
-              ls -la
+              dir
             displayName: 'Debug Environment'
 
           - task: Npm@1
@@ -52,7 +52,8 @@ stages:
               echo "Deploying the DuoPrice application..."
               # Example deployment script (customize as needed)
               # Replace with your actual deployment commands
-              cp -r build/* /path/to/deployment/directory/
+              xcopy /E /I build\* C:\path\to\deployment\directory\
               # Restart application service if needed
-              systemctl restart duo-price-service
+              net stop duo-price-service
+              net start duo-price-service
             displayName: 'Deploy DuoPrice Application'
