@@ -52,8 +52,8 @@ stages:
               echo "Deploying the DuoPrice application..."
               # Example deployment script (customize as needed)
               # Replace with your actual deployment commands
-              xcopy /E /I build\* C:\path\to\deployment\directory\
+              xcopy /E /I /Y build\* C:\path\to\deployment\directory\
               # Restart application service if needed
-              net stop duo-price-service
-              net start duo-price-service
+              sc stop duo-price-service
+              sc start duo-price-service
             displayName: 'Deploy DuoPrice Application'
