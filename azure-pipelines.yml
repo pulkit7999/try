@@ -50,11 +50,28 @@ stages:
         steps:
           - script: |
               echo "Deploying the DuoPrice application..."
-              # Example deployment script (customize as needed)
-              echo "Copying files..."
-              xcopy /E /I /Y build\* C:\path\to\deployment\directory\
-              echo "Restarting service..."
-              sc query duo-price-service || echo "Service not found, skipping restart."
-              sc stop duo-price-service || echo "Failed to stop service, might not be running."
-              sc start duo-price-service || echo "Failed to start service."
+              
+              # Debug the build output directory
+              echo "Build directory contents:"
+              dir build
+
+              # Copy files
+              if exist "build\*" (
+                echo "Copying files..."
+                xcopy /E /I /Y build\* C:\path\to\deployment\directory\
+              ) else (
+                echo "No files found in the build directory."
+              )
+
+              # Check for service existence
+              echo "Checking if the service exists..."
+              sc query duo-price-service
+              if %ERRORLEVEL% NEQ 0 (
+                echo "Service not found, skipping restart."
+              ) else (
+                echo "Stopping service..."
+                sc stop duo-price-service
+                echo "Starting service..."
+                sc start duo-price-service
+              )
             displayName: 'Deploy DuoPrice Application'
