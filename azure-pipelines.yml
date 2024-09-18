@@ -8,7 +8,7 @@ stages:
       - job: Build
         displayName: 'Build Job'
         pool:
-          name: 'DuoPricing'  # Use the name of your self-hosted agent pool here
+          name: 'DuoPrice'  # Updated agent pool name
         steps:
           - task: NodeTool@0
             inputs:
@@ -33,9 +33,14 @@ stages:
       - job: Deploy
         displayName: 'Deploy Job'
         pool:
-          name: 'DuoPricing'  # Use the name of your self-hosted agent pool here
+          name: 'DuoPrice'  # Updated agent pool name
         steps:
           - script: |
-              echo "Deploying the application..."
-              # Add your deployment script here
-            displayName: 'Deploy Application'
+              echo "Deploying the DuoPrice application..."
+              # Example deployment script (customize as needed)
+              # Assuming deployment involves copying files and restarting services
+              # Replace with your actual deployment commands
+              cp -r build/* /path/to/deployment/directory/
+              # Restart application service if needed
+              systemctl restart duo-price-service
+            displayName: 'Deploy DuoPrice Application'
