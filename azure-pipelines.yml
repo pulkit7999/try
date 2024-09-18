@@ -51,9 +51,10 @@ stages:
           - script: |
               echo "Deploying the DuoPrice application..."
               # Example deployment script (customize as needed)
-              # Replace with your actual deployment commands
+              echo "Copying files..."
               xcopy /E /I /Y build\* C:\path\to\deployment\directory\
-              # Restart application service if needed
-              sc stop duo-price-service
-              sc start duo-price-service
+              echo "Restarting service..."
+              sc query duo-price-service || echo "Service not found, skipping restart."
+              sc stop duo-price-service || echo "Failed to stop service, might not be running."
+              sc start duo-price-service || echo "Failed to start service."
             displayName: 'Deploy DuoPrice Application'
