@@ -35,8 +35,8 @@ stages:
 
           - task: Npm@1
             inputs:
-              command: 'run'
-              arguments: 'build'
+              command: 'custom'
+              customCommand: 'run build'
             displayName: 'npm run build'
 
   - stage: Deploy
