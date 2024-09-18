@@ -8,12 +8,25 @@ stages:
       - job: Build
         displayName: 'Build Job'
         pool:
-          name: 'DuoPrice'  # Updated agent pool name
+          name: 'DuoPrice'  # Use the name of your self-hosted agent pool here
         steps:
           - task: NodeTool@0
             inputs:
               versionSpec: '20.x'
             displayName: 'Install Node.js'
+
+          - script: |
+              echo "Checking Node.js and npm versions..."
+              node --version
+              npm --version
+            displayName: 'Check Node.js and npm versions'
+
+          - script: |
+              echo "Current directory:"
+              pwd
+              echo "Files in directory:"
+              ls -la
+            displayName: 'Debug Environment'
 
           - task: Npm@1
             inputs:
@@ -33,12 +46,11 @@ stages:
       - job: Deploy
         displayName: 'Deploy Job'
         pool:
-          name: 'DuoPrice'  # Updated agent pool name
+          name: 'DuoPrice'  # Use the name of your self-hosted agent pool here
         steps:
           - script: |
               echo "Deploying the DuoPrice application..."
               # Example deployment script (customize as needed)
-              # Assuming deployment involves copying files and restarting services
               # Replace with your actual deployment commands
               cp -r build/* /path/to/deployment/directory/
               # Restart application service if needed
