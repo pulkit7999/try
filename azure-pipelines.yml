@@ -8,13 +8,13 @@ stages:
       - job: Build
         displayName: 'Build Job'
         pool:
-          vmImage: ubuntu-latest
+          name: 'DuoPricing'  # Use the name of your self-hosted agent pool here
         steps:
           - task: NodeTool@0
             inputs:
               versionSpec: '20.x'
             displayName: 'Install Node.js'
-          
+
           - task: Npm@1
             inputs:
               command: 'install'
@@ -33,7 +33,7 @@ stages:
       - job: Deploy
         displayName: 'Deploy Job'
         pool:
-          vmImage: ubuntu-latest
+          name: 'DuoPricing'  # Use the name of your self-hosted agent pool here
         steps:
           - script: |
               echo "Deploying the application..."
